@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Sudoku implements SudokuSolver {
     private int[][] sudoku;
     //nio siffror som sedan har 9 positioner som kollar om en siffra finns på en row eller på en rad, representerat av
@@ -72,7 +74,32 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isAllValid() {
-        return false;
+        int[][]temp = new int[9][9];
+
+        //kopiera över elementen i gamla till nya
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                temp[x][y] = sudoku[x][y];
+            }
+        }
+
+        //töm vårt sudoku
+        this.clear();
+
+        boolean allValid = true;
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                int nbr = temp[r][c];
+                if (nbr != 0) {
+                    if (!isValid(r, c, nbr))
+                        allValid = false;
+                    setNumber(r, c, nbr);
+                }
+            }
+        }
+
+        return allValid;
     }
 
     @Override
@@ -83,11 +110,22 @@ public class Sudoku implements SudokuSolver {
     @Override
     public void clear() {
         sudoku = new int[9][9];
+        booleanRow = new boolean[10][9];
+        booleanCol = new boolean[10][9];
+        booleanBox = new boolean[10][3][3];
     }
 
     @Override
     public int[][] getMatrix() {
-        return sudoku;
+        int[][]temp = new int[9][9];
+
+        //kopiera över elementen i gamla till nya
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                temp[x][y] = sudoku[x][y];
+            }
+        }
+        return temp;
     }
 
     @Override
