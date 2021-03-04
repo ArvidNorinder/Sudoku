@@ -16,7 +16,7 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isOutOfBounds(int r, int c) {
-        return false;
+        return !(0 <= r && r < 9 && 0 <= c && c < 9);
     }
 
     @Override
