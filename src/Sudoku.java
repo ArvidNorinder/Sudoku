@@ -37,8 +37,6 @@ public class Sudoku implements SudokuSolver {
         }
     }
 
-    }
-
     @Override
     public int getNumber(int r, int c) {
         if(isOutOfBounds(r, c)){
