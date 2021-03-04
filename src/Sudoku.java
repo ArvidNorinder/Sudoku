@@ -61,7 +61,12 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isValid(int r, int c, int nbr) {
+
+        //kolla även boxen vi är i
+        if (booleanRow[nbr][r] || booleanCol[nbr][c])
         return false;
+
+        return true;
     }
 
     @Override
