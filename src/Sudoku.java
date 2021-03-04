@@ -1,18 +1,10 @@
 public class Sudoku implements SudokuSolver {
-    private int[][] sudoku;
+    private int[][] sudoku = new int[9][9];
     //nio siffror som sedan har 9 positioner som kollar om en siffra finns på en row eller på en rad, representerat av
     //true eller false
-    private int[][] counterRow;
-    private int[][] counterCol;
-    private int[][][] counterBox;
-
-    public Sudoku(){
-        sudoku = new int[9][9];
-        //index 1-9, 0-8 osv
-        counterRow = new int[10][9];
-        counterCol = new int[10][9];
-        counterBox = new int[10][3][3];
-    }
+    private int[][] counterRow = new int[10][9];
+    private int[][] counterCol = new int[10][9];
+    private int[][][] counterBox = new int[10][3][3];
 
     @Override
     public boolean isOutOfBounds(int r, int c) {
