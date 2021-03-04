@@ -6,46 +6,64 @@ public class Sudoku implements SudokuSolver {
     private boolean[][] booleanCol;
 
 
+
     public Sudoku(){
         sudoku = new int[9][9];
-        //index 0-9 där index 0 i de 10 första positionerna inte används. Så slipper vi ta -1 på alla nummer som skrivs in
+        //index 1-9, 0-8 osv
         booleanRow = new boolean[10][9];
         booleanCol = new boolean[10][9];
     }
 
     @Override
     public boolean isOutOfBounds(int r, int c) {
-        return false;
+        return !(0 <= r && r < 9 && 0 <= c && c < 9);
     }
 
     @Override
     public void setNumber(int r, int c, int nbr) {
         //-1 för att siffran 1 motsvarar pos 0. Behandla row och col med -1 vid i
-        booleanRow[nbr][r] = true;
-        booleanCol[nbr][c] = true;
+        
         sudoku[r][c] = nbr;
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            if(nbr < 1 || nbr > 9){
+                throw new IllegalArgumentException("nbr = " + nbr);
+            }else{
+                booleanRow[nbr][r] = true;
+                booleanCol[nbr][c] = true;
+                sudoku[r][c] = nbr;
+            }
+        }
+    }
+
     }
 
     @Override
     public int getNumber(int r, int c) {
-        return sudoku[r][c];
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            return sudoku[r][c];
+        }
     }
 
     @Override
     public void clearNumber(int r, int c) {
-        sudoku[r][c] = 0;
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            booleanRow[sudoku[r][c]][r] = false;
+            booleanCol[sudoku[r][c]][c] = false;
+            sudoku[r][c] = 0;
+
+        }
+
     }
 
     @Override
     public boolean isValid(int r, int c, int nbr) {
-        //kolla om det går med row och col att stoppa in ett nummer, om det går, kolla om det går att stoppa in numret
-        //i en box
-
-        //lägg till kontroll i boxen
-        if (booleanRow[nbr][r] || booleanCol[nbr][c])
-            return false;
-
-        return true;
+        return false;
     }
 
     @Override
