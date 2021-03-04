@@ -1,4 +1,16 @@
 public interface SudokuSolver {
+
+    /**
+     * Returns false if the position r,c is outside the sudoku game borders
+     * 
+     * @param r
+     * 
+     * @param c
+     * 
+     */
+    public boolean isOutOfBounds(int r, int c);
+
+
     /**
      * Sets the number nbr in box r, c.
      *
