@@ -60,10 +60,22 @@ public interface SudokuSolver {
      *
      * @return true if the number would be valid in the box, otherwise false
      *
+     * @throws IllegalArgumentException
+     *             if r or c is outside [0..getDimension()-1] or
+     *             number is outside [1..9]
+     */
+    public boolean isValidPut(int r, int c, int nbr);
+
+    /**
+     * 
+     * @param r The row
+     * @param c The column
+     * 
+     * @return true if the plot r,c is valid, otherwise false
+     * 
      * @throws IllegalArgumentException if r or c is outside [0..getDimension()-1]
      */
-    public boolean isValid(int r, int c, int nbr);
-
+    public boolean isValid(int r, int c);
     /**
      * Checks to see if all insertions are valid so far
      *

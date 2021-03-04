@@ -1,21 +1,19 @@
-import java.util.Arrays;
-
 public class Sudoku implements SudokuSolver {
     private int[][] sudoku;
     //nio siffror som sedan har 9 positioner som kollar om en siffra finns på en row eller på en rad, representerat av
     //true eller false
-    private boolean[][] booleanRow;
-    private boolean[][] booleanCol;
-    private boolean[][][] booleanBox;
+    private int[][] counterRow;
+    private int[][] counterCol;
+    private int[][][] counterBox;
 
 
 
     public Sudoku(){
         sudoku = new int[9][9];
         //index 1-9, 0-8 osv
-        booleanRow = new boolean[10][9];
-        booleanCol = new boolean[10][9];
-        booleanBox = new boolean[10][3][3];
+        counterRow = new int[10][9];
+        counterCol = new int[10][9];
+        counterBox = new int[10][3][3];
     }
 
     @Override
@@ -25,18 +23,16 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public void setNumber(int r, int c, int nbr) {
-        //-1 för att siffran 1 motsvarar pos 0. Behandla row och col med -1 vid i
         
-        sudoku[r][c] = nbr;
         if(isOutOfBounds(r, c)){
             throw new IllegalArgumentException("r = " + r + ", c = " + c);
         }else{
             if(nbr < 1 || nbr > 9){
                 throw new IllegalArgumentException("nbr = " + nbr);
             }else{
-                booleanRow[nbr][r] = true;
-                booleanCol[nbr][c] = true;
-                booleanBox[nbr][r / 3][c / 3] = true;
+                counterRow[nbr][r]++;
+                counterCol[nbr][c]++;
+                counterBox[nbr][r / 3][c / 3]++;
                 sudoku[r][c] = nbr;
             }
         }
@@ -44,11 +40,11 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public int getNumber(int r, int c) {
-        if(isOutOfBounds(r, c)){
+        if(isOutOfBounds(r, c))
             throw new IllegalArgumentException("r = " + r + ", c = " + c);
-        }else{
-            return sudoku[r][c];
-        }
+        
+        return sudoku[r][c];
+        
     }
 
     @Override
@@ -56,26 +52,41 @@ public class Sudoku implements SudokuSolver {
         if(isOutOfBounds(r, c)){
             throw new IllegalArgumentException("r = " + r + ", c = " + c);
         }else{
-            booleanRow[sudoku[r][c]][r] = false;
-            booleanCol[sudoku[r][c]][c] = false;
-            booleanBox[sudoku[r][c]][r / 3][c / 3] = false;
+            counterRow[sudoku[r][c]][r]--;
+            counterCol[sudoku[r][c]][c]--;
+            counterBox[sudoku[r][c]][r / 3][c / 3]--;
             sudoku[r][c] = 0;
         }
 
     }
 
     @Override
-    public boolean isValid(int r, int c, int nbr) {
+    public boolean isValidPut(int r, int c, int nbr){
+
+        if(isOutOfBounds(r, c))
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+
+        if(nbr < 1 || nbr > 9)
+            throw new IllegalArgumentException("nbr = " + nbr);
+
+        return counterRow[nbr][r] == 0 && counterCol[nbr][c] == 0 && counterBox[nbr][r / 3][c / 3] == 0;
+    }
+
+    @Override
+    public boolean isValid(int r, int c) {
         if(isOutOfBounds(r, c))
             throw new IllegalArgumentException("r = " + r + ", c = " + c);
         
-        return !(booleanRow[nbr][r] || booleanCol[nbr][c] || booleanBox[nbr][r / 3][c / 3]);
+        int nbr = sudoku[r][c];
+        
+        return nbr == 0 || (counterRow[nbr][r] == 1 && counterCol[nbr][c] == 1 && counterBox[nbr][r / 3][c / 3] == 1);
+        
     }
 
     @Override
     public boolean isAllValid() {
         int[][]temp = new int[9][9];
-
+        
         //kopiera över elementen i gamla till nya
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
@@ -92,7 +103,7 @@ public class Sudoku implements SudokuSolver {
             for (int c = 0; c < 9; c++) {
                 int nbr = temp[r][c];
                 if (nbr != 0) {
-                    if (!isValid(r, c, nbr))
+                    if (!isValidPut(r, c, nbr))
                         allValid = false;
                     setNumber(r, c, nbr);
                 }
@@ -110,9 +121,9 @@ public class Sudoku implements SudokuSolver {
     @Override
     public void clear() {
         sudoku = new int[9][9];
-        booleanRow = new boolean[10][9];
-        booleanCol = new boolean[10][9];
-        booleanBox = new boolean[10][3][3];
+        counterRow = new int[10][9];
+        counterCol = new int[10][9];
+        counterBox = new int[10][3][3];
     }
 
     @Override
