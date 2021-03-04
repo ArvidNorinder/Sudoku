@@ -6,6 +6,16 @@ public class Sudoku implements SudokuSolver {
     }
 
     @Override
+    public boolean isOutOfBounds(int r, int c) {
+        
+        return 0 <= r && r < 9 && 0 <= c && c < 9;
+    }
+
+    public void hello(){
+        
+    }
+
+    @Override
     public void setNumber(int r, int c, int nbr) {
         sudoku[r][c] = nbr;
     }
