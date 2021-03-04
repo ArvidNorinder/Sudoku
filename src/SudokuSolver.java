@@ -22,28 +22,51 @@ public interface SudokuSolver {
      * @param c
      *            The column
      * @return the number in box r,c or 0 if the box is empty.
+     *
      * @throws IllegalArgumentException
      *             if r or c is outside [0..getDimension()-1]
      */
     public int getNumber(int r, int c);
 
-    // Tömmer rutan r,c.
-    // IllegalArgumentException om fel vÃ¤rde på r eller c
-
     /**
+     * Clears the number in box r,c. If the box is empty nothing happens.
+     * @param r The row
+     * @param c The column
+     *
+     * @throws IllegalArgumentException if r or c is outside [0..getDimension()-1]
+     */
     public void clearNumber(int r, int c);
 
-    // Kontrollerar om värdet nbr i rutan r,c är ok enligt reglerna.
-    // IllegalArgumentException om fel värde på r, c eller nbr
+    /**
+     * Checks if a number to be inserted into a box is valid according to sudoku rules
+     *
+     * @param r The row
+     * @param c The column
+     * @param nbr The number to check if valid
+     *
+     * @return true if the number would be valid in the box, otherwise false
+     *
+     * @throws IllegalArgumentException if r or c is outside [0..getDimension()-1]
+     */
     public boolean isValid(int r, int c, int nbr);
 
-    // Kontrollerar att alla ifyllda siffrorna uppfyller reglerna.
+    /**
+     * Checks to see if all insertions are valid so far
+     *
+     * @return true if all is valid so far, otherwise false
+     */
     public boolean isAllValid();
 
-    // Försöker läsa sudokut och returnerar true om det var läsbart, annars false.
+    /**
+     * Checks to see if the sudoku is solveable, otherwise returns false
+     *
+     * @return true if the puzzle is solveable, otherwise false
+     */
     public boolean solve();
 
-    // Tömmer alla rutorna i sudokut
+    /**
+     * Empties all the boxes in the sudoku puzzle.
+     */
     public void clear();
 
     /**
