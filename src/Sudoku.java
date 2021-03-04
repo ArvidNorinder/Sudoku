@@ -6,11 +6,12 @@ public class Sudoku implements SudokuSolver {
     private boolean[][] booleanCol;
 
 
+
     public Sudoku(){
         sudoku = new int[9][9];
-        //index 0-8 osv
-        booleanRow = new boolean[9][9];
-        booleanCol = new boolean[9][9];
+        //index 1-9, 0-8 osv
+        booleanRow = new boolean[10][9];
+        booleanCol = new boolean[10][9];
     }
 
     @Override
@@ -21,19 +22,43 @@ public class Sudoku implements SudokuSolver {
     @Override
     public void setNumber(int r, int c, int nbr) {
         //-1 för att siffran 1 motsvarar pos 0. Behandla row och col med -1 vid i
-        booleanRow[nbr - 1][r] = true;
-        booleanCol[nbr - 1][c] = true;
+        
         sudoku[r][c] = nbr;
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            if(nbr < 1 || nbr > 9){
+                throw new IllegalArgumentException("nbr = " + nbr);
+            }else{
+                booleanRow[nbr - 1][r] = true;
+                booleanCol[nbr - 1][c] = true;
+                sudoku[r][c] = nbr;
+            }
+        }
+    }
+
     }
 
     @Override
     public int getNumber(int r, int c) {
-        return sudoku[r][c];
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            return sudoku[r][c];
+        }
     }
 
     @Override
     public void clearNumber(int r, int c) {
-        sudoku[r][c] = 0;
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            booleanRow[sudoku[r][c]][r] = false;
+            booleanCol[sudoku[r][c]][c] = false;
+            sudoku[r][c] = 0;
+
+        }
+
     }
 
     @Override
