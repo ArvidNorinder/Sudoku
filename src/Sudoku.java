@@ -124,4 +124,19 @@ public class Sudoku implements SudokuSolver {
     public void setMatrix(int[][] nbrs) {
         sudoku = nbrs;
     }
+
+    @Override
+    public void printMatrix(){
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                if(sudoku[r][c] != 0){
+                    System.out.print(sudoku[r][c]);
+                }else{
+                    System.out.print('.');
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 }

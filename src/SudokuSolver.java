@@ -112,6 +112,11 @@ public interface SudokuSolver {
      */
     public void setMatrix(int[][] nbrs);
 
+    /**
+     * Prints the entire sudoku grid. 
+     * If a spot doesn't have a number assigned to it, a dot will be printed instead.
+     */
+    public void printMatrix();
 
     /**
      * Returns the dimension of the grid
