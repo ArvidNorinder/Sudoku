@@ -4,6 +4,7 @@ public class Sudoku implements SudokuSolver {
     //true eller false
     private boolean[][] booleanRow;
     private boolean[][] booleanCol;
+    private boolean[][][] booleanBox;
 
 
 
@@ -12,6 +13,7 @@ public class Sudoku implements SudokuSolver {
         //index 1-9, 0-8 osv
         booleanRow = new boolean[10][9];
         booleanCol = new boolean[10][9];
+        booleanBox = new boolean[10][3][3];
     }
 
     @Override
@@ -32,6 +34,7 @@ public class Sudoku implements SudokuSolver {
             }else{
                 booleanRow[nbr][r] = true;
                 booleanCol[nbr][c] = true;
+                booleanBox[nbr][r / 3][c / 3] = true;
                 sudoku[r][c] = nbr;
             }
         }
@@ -53,20 +56,18 @@ public class Sudoku implements SudokuSolver {
         }else{
             booleanRow[sudoku[r][c]][r] = false;
             booleanCol[sudoku[r][c]][c] = false;
+            booleanBox[sudoku[r][c]][r / 3][c / 3] = false;
             sudoku[r][c] = 0;
-
         }
 
     }
 
     @Override
     public boolean isValid(int r, int c, int nbr) {
-
-        //kolla även boxen vi är i
-        if (booleanRow[nbr][r] || booleanCol[nbr][c])
-        return false;
-
-        return true;
+        if(isOutOfBounds(r, c))
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        
+        return !(booleanRow[nbr][r] || booleanCol[nbr][c] || booleanBox[nbr][r / 3][c / 3]);
     }
 
     @Override
