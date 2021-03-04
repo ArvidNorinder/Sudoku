@@ -6,8 +6,6 @@ public class Sudoku implements SudokuSolver {
     private int[][] counterCol;
     private int[][][] counterBox;
 
-
-
     public Sudoku(){
         sudoku = new int[9][9];
         //index 1-9, 0-8 osv
@@ -85,32 +83,15 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isAllValid() {
-        int[][]temp = new int[9][9];
-        
-        //kopiera över elementen i gamla till nya
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                temp[x][y] = sudoku[x][y];
+
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                if(!isValid(r, c))
+                    return false;
             }
         }
+        return true;
 
-        //töm vårt sudoku
-        this.clear();
-
-        boolean allValid = true;
-
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                int nbr = temp[r][c];
-                if (nbr != 0) {
-                    if (!isValidPut(r, c, nbr))
-                        allValid = false;
-                    setNumber(r, c, nbr);
-                }
-            }
-        }
-
-        return allValid;
     }
 
     @Override
