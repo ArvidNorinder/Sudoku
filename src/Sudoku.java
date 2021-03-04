@@ -12,7 +12,7 @@ public class Sudoku implements SudokuSolver {
     }
 
     public void hello(){
-        
+        System.out.println("hej");
     }
 
     @Override
