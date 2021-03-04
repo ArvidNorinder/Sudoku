@@ -8,8 +8,8 @@ public class Sudoku implements SudokuSolver {
     @Override
     public boolean isOutOfBounds(int r, int c) {
         
-        return !(0 <= r && r < 9 && 0 <= c && c < 9);
-    }
+        return (0 <= r && r < 9 && 0 <= c && c < 9);
+    }//hej arvid
 
     public void hello(){
         System.out.println("hej");
