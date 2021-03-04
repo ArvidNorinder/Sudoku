@@ -7,27 +7,38 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isOutOfBounds(int r, int c) {
-        
         return !(0 <= r && r < 9 && 0 <= c && c < 9);
-    }
-
-    public void hello(){
-        System.out.println("hej");
     }
 
     @Override
     public void setNumber(int r, int c, int nbr) {
-        sudoku[r][c] = nbr;
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            if(nbr < 1 || nbr > 9){
+                throw new IllegalArgumentException("nbr = " + nbr);
+            }else{
+                sudoku[r][c] = nbr;
+            }
+        }
     }
 
     @Override
     public int getNumber(int r, int c) {
-        return sudoku[r][c];
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            return sudoku[r][c];
+        }
     }
 
     @Override
     public void clearNumber(int r, int c) {
-        sudoku[r][c] = 0;
+        if(isOutOfBounds(r, c)){
+            throw new IllegalArgumentException("r = " + r + ", c = " + c);
+        }else{
+            sudoku[r][c] = 0;
+        }
     }
 
     @Override
