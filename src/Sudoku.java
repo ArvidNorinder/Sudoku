@@ -44,6 +44,7 @@ public class Sudoku implements SudokuSolver {
         //lägg till kontroll i boxen
         if (booleanRow[nbr][r] || booleanCol[nbr][c])
             return false;
+
         return true;
     }
 
