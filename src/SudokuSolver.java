@@ -3,9 +3,11 @@ public interface SudokuSolver {
     /**
      * Returns false if the position r,c is outside the sudoku game borders
      * 
-     * @param r
+     * @param r row
      * 
-     * @param c
+     * @param c col
+     *
+     * @return as said in description
      * 
      */
     public boolean isOutOfBounds(int r, int c);

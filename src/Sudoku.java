@@ -8,9 +8,9 @@ public class Sudoku implements SudokuSolver {
 
     public Sudoku(){
         sudoku = new int[9][9];
-        //index 0-8 osv
-        booleanRow = new boolean[9][9];
-        booleanCol = new boolean[9][9];
+        //index 0-9 där index 0 i de 10 första positionerna inte används. Så slipper vi ta -1 på alla nummer som skrivs in
+        booleanRow = new boolean[10][9];
+        booleanCol = new boolean[10][9];
     }
 
     @Override
@@ -21,8 +21,8 @@ public class Sudoku implements SudokuSolver {
     @Override
     public void setNumber(int r, int c, int nbr) {
         //-1 för att siffran 1 motsvarar pos 0. Behandla row och col med -1 vid i
-        booleanRow[nbr - 1][r] = true;
-        booleanCol[nbr - 1][c] = true;
+        booleanRow[nbr][r] = true;
+        booleanCol[nbr][c] = true;
         sudoku[r][c] = nbr;
     }
 
@@ -38,7 +38,13 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isValid(int r, int c, int nbr) {
-        return false;
+        //kolla om det går med row och col att stoppa in ett nummer, om det går, kolla om det går att stoppa in numret
+        //i en box
+
+        //lägg till kontroll i boxen
+        if (booleanRow[nbr][r] || booleanCol[nbr][c])
+            return false;
+        return true;
     }
 
     @Override
