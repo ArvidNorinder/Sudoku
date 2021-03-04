@@ -30,8 +30,8 @@ public class Sudoku implements SudokuSolver {
             if(nbr < 1 || nbr > 9){
                 throw new IllegalArgumentException("nbr = " + nbr);
             }else{
-                booleanRow[nbr - 1][r] = true;
-                booleanCol[nbr - 1][c] = true;
+                booleanRow[nbr][r] = true;
+                booleanCol[nbr][c] = true;
                 sudoku[r][c] = nbr;
             }
         }
