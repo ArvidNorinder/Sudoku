@@ -17,9 +17,10 @@ public class Sudoku implements SudokuSolver {
         if(isOutOfBounds(r, c)){
             throw new IllegalArgumentException("r = " + r + ", c = " + c);
         }else{
-            if(nbr < 1 || nbr > 9){
+            if(nbr < 0 || nbr > 9){
                 throw new IllegalArgumentException("nbr = " + nbr);
             }else{
+                clearNumber(r, c);
                 counterRow[nbr][r]++;
                 counterCol[nbr][c]++;
                 counterBox[nbr][r / 3][c / 3]++;
@@ -75,20 +76,51 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isAllValid() {
-
-        for(int r = 0; r < 9; r++){
-            for(int c = 0; c < 9; c++){
-                if(!isValid(r, c))
-                    return false;
-            }
-        }
-        return true;
-
+        return solve(0,0);
     }
 
     @Override
     public boolean solve() {
-        return false;
+        return solve(0,0);
+    }
+
+    private boolean solve(int r, int c){
+        if(getNumber(r,c) != 0){
+            if(isValid(r,c)){
+                if(c == 8){
+                    if(r == 8){
+                        return true;
+                    }else{
+                        return solve(r + 1, 0);
+                    }
+                }else{
+                    return solve(r, c + 1);
+                }
+            }else{
+                System.out.println(r + ", " + c);
+                return false;
+            }
+        }else{
+            boolean success = false;
+
+            for(int i = 1; i <= 9 && !success; i++){
+                if(isValidPut(r, c, i)){
+                    setNumber(r, c, i);
+                    if(c == 8){
+                        if(r == 8){
+                            success = true;
+                        }else{
+                            success = solve(r + 1, 0);
+                        }
+                    }else{
+                        success = solve(r, c + 1);
+                    }
+                }
+            }
+            if(!success)
+                clearNumber(r, c);
+            return success;
+        }
     }
 
     @Override
@@ -114,13 +146,23 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public void setMatrix(int[][] nbrs) {
-        sudoku = nbrs;
+        clear();
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                setNumber(r, c, nbrs[r][c]);
+            }
+        }
     }
 
     @Override
     public void printMatrix(){
         for(int r = 0; r < 9; r++){
+            if(r % 3 == 0)
+                System.out.println();
+
             for(int c = 0; c < 9; c++){
+                if(c % 3 == 0)
+                    System.out.print("   ");
                 if(sudoku[r][c] != 0){
                     System.out.print(sudoku[r][c]);
                 }else{
@@ -128,6 +170,7 @@ public class Sudoku implements SudokuSolver {
                 }
             }
             System.out.println();
+            
         }
         System.out.println();
     }
