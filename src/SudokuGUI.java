@@ -16,8 +16,13 @@ public class SudokuGUI {
     private void createWindow() {
         JFrame frame = new JFrame("Sudoku");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container pane = frame.getContentPane();
+        Container pane = new Container();
+        //vi vill skapa en ny kontainer där vi placerar knappar
+        Container buttonPane = new Panel();
         Sudoku sudoku = new Sudoku();
+
+        GridLayout grid = new GridLayout(9, 9);
+        pane.setLayout(grid);
 
         JTextField[][] textFields = new JTextField[9][9];
 
@@ -66,9 +71,6 @@ public class SudokuGUI {
             }
         }
 
-        GridLayout grid = new GridLayout(9, 9);
-        frame.setLayout(grid);
-
         //grid created. Add key listeners to update backend sudoku when keys are inserted
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
@@ -78,7 +80,7 @@ public class SudokuGUI {
         }
 
         //lägg till de två knapparna som behövs
-        JButton solve = new JButton();
+        JButton solve = new JButton("Solve");
 
         solve.addActionListener(e -> {
             //fixa så att den hämtar värden från text,fields, lägger till dem i sudoku, anropar solve, insertar värden som ges
@@ -95,7 +97,8 @@ public class SudokuGUI {
                 for (int x = 0; x < 9; x++) {
                     for (int y = 0; y < 9; y++) {
                         try {
-                            textFields[x][y].getDocument().insertString(0, sudoku.getMatrix()[x][y] + "", null);
+                            if (sudoku.getMatrix()[x][y] + "" != "")
+                                textFields[x][y].getDocument().insertString(0, sudoku.getMatrix()[x][y] + "", null);
                         }
                         catch (BadLocationException exception) {
                             exception.printStackTrace();
@@ -105,7 +108,10 @@ public class SudokuGUI {
             }
         });
 
-        //pane.add(solve, BorderLayout.SOUTH);
+        frame.add(pane);
+        buttonPane.add(solve, BorderLayout.SOUTH);
+        frame.add(buttonPane, BorderLayout.SOUTH);
+
 
         frame.setSize(500, 500);
         frame.setVisible(true);
