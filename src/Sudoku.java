@@ -87,7 +87,12 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean solve() {
-        return solve(0,0);
+        if(isAllValid()){
+            return solve(0,0);
+        }else{
+            return false;
+        }
+        
     }
 
     private boolean solve(int r, int c){
