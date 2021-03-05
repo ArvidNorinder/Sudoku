@@ -4,6 +4,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Scanner;
 
 public class SudokuGUI {
@@ -15,6 +17,7 @@ public class SudokuGUI {
         JFrame frame = new JFrame("Sudoku");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = frame.getContentPane();
+        Sudoku sudoku = new Sudoku();
 
         JTextField[][] textFields = new JTextField[9][9];
 
@@ -63,20 +66,46 @@ public class SudokuGUI {
             }
         }
 
-        //kom ihåg att lägga till textfields till pane
-
-
         GridLayout grid = new GridLayout(9, 9);
         frame.setLayout(grid);
 
-        //grid created
+        //grid created. Add key listeners to update backend sudoku when keys are inserted
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                pane.add(textFields[x][y]);
+                JTextField tf = textFields[x][y];
+                pane.add(tf);
             }
         }
 
+        //lägg till de två knapparna som behövs
+        JButton solve = new JButton();
 
+        solve.addActionListener(e -> {
+            //fixa så att den hämtar värden från text,fields, lägger till dem i sudoku, anropar solve, insertar värden som ges
+
+            //uppdaterar vårt sudoku med det som faktiskt står på vår GUI
+            for (int x = 0; x < 9; x++) {
+                for (int y = 0; y < 9; y++) {
+                    sudoku.setNumber(x, y, Integer.parseInt(textFields[x][y].getText()));
+                }
+            }
+
+            //if the sudoku was solveable we update our GUI
+            if (sudoku.solve()) {
+                for (int x = 0; x < 9; x++) {
+                    for (int y = 0; y < 9; y++) {
+                        try {
+                            textFields[x][y].getDocument().insertString(0, sudoku.getMatrix()[x][y] + "", null);
+                        }
+                        catch (BadLocationException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+
+        //pane.add(solve, BorderLayout.SOUTH);
 
         frame.setSize(500, 500);
         frame.setVisible(true);
