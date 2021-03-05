@@ -4,9 +4,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Scanner;
 
 public class SudokuGUI {
     public SudokuGUI() {
@@ -81,6 +78,7 @@ public class SudokuGUI {
 
         //lägg till de två knapparna som behövs
         JButton solve = new JButton("Solve");
+        JButton clear = new JButton("Clear");
 
         solve.addActionListener(e -> {
             //fixa så att den hämtar värden från text,fields, lägger till dem i sudoku, anropar solve, insertar värden som ges
@@ -110,6 +108,7 @@ public class SudokuGUI {
 
         frame.add(pane);
         buttonPane.add(solve, BorderLayout.SOUTH);
+        buttonPane.add(clear, BorderLayout.SOUTH);
         frame.add(buttonPane, BorderLayout.SOUTH);
 
 
