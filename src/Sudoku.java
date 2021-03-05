@@ -76,7 +76,13 @@ public class Sudoku implements SudokuSolver {
 
     @Override
     public boolean isAllValid() {
-        return solve(0,0);
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                if(!isValid(r, c))
+                    return false;
+            }
+        }
+        return true;
     }
 
     @Override
