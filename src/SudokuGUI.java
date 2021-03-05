@@ -107,6 +107,17 @@ public class SudokuGUI {
             }
         });
 
+        clear.addActionListener(e -> {
+            //cleara sudokut i bakgrunden
+            sudoku.clear();
+
+            for (int x = 0; x < 9; x++) {
+                for (int y = 0; y < 9; y++) {
+                        textFields[x][y].setDocument(new OneNumber());
+                }
+            }
+        });
+
         frame.add(pane);
         buttonPane.add(solve, BorderLayout.SOUTH);
         buttonPane.add(clear, BorderLayout.SOUTH);
