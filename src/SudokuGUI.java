@@ -105,6 +105,9 @@ public class SudokuGUI {
                     }
                 }
             }
+
+            else
+                JOptionPane.showMessageDialog(new JFrame(), "No solution could be found.");
         });
 
         clear.addActionListener(e -> {
