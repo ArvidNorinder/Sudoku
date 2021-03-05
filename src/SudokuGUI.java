@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
@@ -11,22 +12,32 @@ public class SudokuGUI {
     }
 
     private void createWindow() {
-        JFrame frame = new JFrame("Example with restricted input");
+        JFrame frame = new JFrame("Sudoku");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = frame.getContentPane();
 
-        JTextField tf = new JTextField("");
-        tf.setDocument(new OneNumber());
 
-        /*tf.addActionListener(e -> {
-            Scanner scan = new Scanner(System.in);
-            System.out.println(scan.nextLine());
-            scan.close();
-        });*/
+        GridLayout grid = new GridLayout(9, 9);
+        frame.setLayout(grid);
 
-        pane.add(tf, BorderLayout.CENTER);
+        //grid created
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                JTextField tf = new JTextField("");
+                tf.setHorizontalAlignment(JTextField.CENTER);
+                tf.setFont(new Font("Verdana",
+                        Font.CENTER_BASELINE,
+                        20));
+                tf.setDocument(new OneNumber());
+                tf.setBorder(new LineBorder(Color.BLACK, 1));
+                pane.add(tf);
+            }
+        }
 
-        frame.pack();
+
+
+
+        frame.setSize(500, 500);
         frame.setVisible(true);
     }
 
