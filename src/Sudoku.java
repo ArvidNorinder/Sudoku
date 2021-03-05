@@ -6,8 +6,7 @@ public class Sudoku implements SudokuSolver {
     private int[][] counterCol = new int[10][9];
     private int[][][] counterBox = new int[10][3][3];
 
-    @Override
-    public boolean isOutOfBounds(int r, int c) {
+    private boolean isOutOfBounds(int r, int c) {
         return !(0 <= r && r < 9 && 0 <= c && c < 9);
     }
 
