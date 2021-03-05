@@ -16,6 +16,55 @@ public class SudokuGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = frame.getContentPane();
 
+        JTextField[][] textFields = new JTextField[9][9];
+
+        boolean orangeField;
+        boolean orangeStart = true;
+        int countX = 0;
+        int countY = 0;
+
+        for (int x = 0; x < 9; x++) {
+            //när countY är 3 har loopen nedan skett tre gånger, och därför vill vi börja med orange = !orange
+            if (countY == 3) {
+                countY = 0;
+                orangeStart = !orangeStart;
+            }
+
+            //ser till att count y är på siffran av den exekvering med start från 1 vi är på
+            countY++;
+
+            countX = 0;
+
+            if (orangeStart)
+                orangeField = true;
+            else
+                orangeField = false;
+
+            for (int y = 0; y < 9; y++) {
+                textFields[x][y] = new JTextField("");
+                JTextField tf = textFields[x][y];
+                tf.setHorizontalAlignment(JTextField.CENTER);
+                tf.setFont(new Font("Verdana",
+                        Font.CENTER_BASELINE,
+                        20));
+                tf.setDocument(new OneNumber());
+                tf.setBorder(new LineBorder(Color.BLACK, 1));
+
+                if (orangeField)
+                    tf.setBackground(Color.ORANGE);
+
+                countX++;
+
+                //när tre rutor i rad har markerats oranga
+                if (countX == 3) {
+                    orangeField = !orangeField;
+                    countX = 0;
+                }
+            }
+        }
+
+        //kom ihåg att lägga till textfields till pane
+
 
         GridLayout grid = new GridLayout(9, 9);
         frame.setLayout(grid);
@@ -23,17 +72,9 @@ public class SudokuGUI {
         //grid created
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                JTextField tf = new JTextField("");
-                tf.setHorizontalAlignment(JTextField.CENTER);
-                tf.setFont(new Font("Verdana",
-                        Font.CENTER_BASELINE,
-                        20));
-                tf.setDocument(new OneNumber());
-                tf.setBorder(new LineBorder(Color.BLACK, 1));
-                pane.add(tf);
+                pane.add(textFields[x][y]);
             }
         }
-
 
 
 
