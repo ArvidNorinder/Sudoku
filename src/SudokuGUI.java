@@ -86,7 +86,8 @@ public class SudokuGUI {
             //uppdaterar vårt sudoku med det som faktiskt står på vår GUI
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 9; y++) {
-                    sudoku.setNumber(x, y, Integer.parseInt(textFields[x][y].getText()));
+                    //if (textFields[x][y].getText() != "")
+                        //sudoku.setNumber(x, y, Integer.parseInt(textFields[x][y].getText()));
                 }
             }
 
@@ -96,7 +97,7 @@ public class SudokuGUI {
                     for (int y = 0; y < 9; y++) {
                         try {
                             if (sudoku.getMatrix()[x][y] + "" != "")
-                                textFields[x][y].getDocument().insertString(0, sudoku.getMatrix()[x][y] + "", null);
+                               textFields[x][y].getDocument().insertString(0, sudoku.getMatrix()[x][y] + "", null);
                         }
                         catch (BadLocationException exception) {
                             exception.printStackTrace();
