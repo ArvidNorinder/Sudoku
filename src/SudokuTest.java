@@ -20,7 +20,7 @@ class SudokuTest {
         assertThrows(IllegalArgumentException.class, () -> sudoku.setNumber(-20, 100, 8));
         assertThrows(IllegalArgumentException.class, () -> sudoku.setNumber(5, 2, 13));
         assertThrows(IllegalArgumentException.class, () -> sudoku.setNumber(10, 2, 1));
-        assertThrows(IllegalArgumentException.class, () -> sudoku.setNumber(0, 2, 1));
+        assertThrows(IllegalArgumentException.class, () -> sudoku.setNumber(9, 2, 1));
 
         assertDoesNotThrow(() -> sudoku.setNumber(3, 7, 8));
         assertDoesNotThrow(() -> sudoku.setNumber(2, 5, 6));
@@ -30,7 +30,7 @@ class SudokuTest {
     void getNumber() {
         assertThrows(IllegalArgumentException.class, () -> sudoku.getNumber(-20, 100));
         assertThrows(IllegalArgumentException.class, () -> sudoku.getNumber(10, 2));
-        assertThrows(IllegalArgumentException.class, () -> sudoku.getNumber(0, 2));
+        assertThrows(IllegalArgumentException.class, () -> sudoku.getNumber(9, 2));
 
         sudoku.setNumber(3, 7, 8);
         sudoku.setNumber(5, 2, 8);
